@@ -12,18 +12,23 @@ function MyMatlab1(InFile1, InFile2, InFile3, InFile4,...
 
 
 fprintf('Started\n')
-% if isempty(gcp('nocreate'))
-% parpool('local',4);
-% end
 startTime = tic;
-% [mpc,contingencies] = convert2mpc(InFile3,InFile4,InFile2,InFile1);
-[mpc,contingencies] = convert2mpc_par(InFile3,InFile4,InFile2,InFile1);
-%TimeLimitInSeconds=600;
-%ScoringMethod=2;
+%% Converting to mpc format
+pool = gcp;
+nworks = pool.NumWorkers;
+if nworks < 2
+    disp('WARNING: Parpool has less than 2 workers')
+    disp('Performance will be strongly affected')
+    [mpc,contingencies] = convert2mpc(InFile3,InFile4,InFile2,InFile1);
+else
+    [mpc,contingencies] = convert2mpc_par(InFile3,InFile4,InFile2,InFile1);
+end
 
+%% Secure-constrained Optimal Power Flow
 [mpcOPF, ~, mpcOPF_or] = solveSCOPF(mpc,contingencies,...
     true,TimeLimitInSeconds, ScoringMethod, startTime);
 save('mpc.mat','mpcOPF','mpcOPF_or','contingencies');
+%% Create solution for short-time window
 disp('Creating solution1.txt')
 a=tic;
 create_solution1(fixGen2Normal(gen2shunts(mpcOPF)));
