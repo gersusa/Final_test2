@@ -26,7 +26,7 @@ order_save = mpcOPF_or.order.bus.e2i; % busses w/ fixed shunts
 
 %%
 if ~isempty(pfs)
-    tic
+    a=tic;
     mpcOPF_indexMap=mpcOPF.indexMap;
     mpcOPF_or_comp=mpcOPF_or.comp;
     %pfs_bus={pfs(:).bus};
@@ -44,19 +44,18 @@ if ~isempty(pfs)
         pfs(i).gen=[pfs(i).gen mpcOPF_or.gen(:,PMIN) mpcOPF_or.gen(:,PMAX) mpcOPF_or.gen(:,QMIN) mpcOPF_or.gen(:,QMAX)]; %BE CAREFULL WITH THE NEW CONSTANTS INDEX, pmin(5) pmax(6) qmin(7) qmax(8)
 %         pfs(i).bus=[pfs_bus{i} mpcOPF_or2.bus(:,PD) mpcOPF_or2.bus(:,QD)];    %BE CAREFULL WITH THE NEW CONSTANTS INDEX, PD(7) QD(8)
 %         pfs(i).gen=[pfs_gen{i} mpcOPF_or2.gen(:,PMIN) mpcOPF_or2.gen(:,PMAX) mpcOPF_or2.gen(:,QMIN) mpcOPF_or2.gen(:,QMAX)]; %BE CAREFULL WITH THE NEW CONSTANTS INDEX, pmin(5) pmax(6) qmin(7) qmax(8)
+%     end
+%     toc
+%     tic
+%     pfs_cell=num2cell(pfs(:));
+%     parfor i=1:length(pfs)
+%         pfs(i) = fixGen2Normal_edit(gen2shunts_sol2(pfs_cell{i}));
+        pfs(i) = fixGen2Normal_edit(gen2shunts_sol2(pfs(i)));
     end
-    toc
-    tic
-    pfs_cell=num2cell(pfs(:));
-    parfor i=1:length(pfs)
-        pfs(i) = fixGen2Normal_edit(gen2shunts_sol2(pfs_cell{i}));
-%         pfs(i) = fixGen2Normal_edit(gen2shunts_sol2(pfs(i)));
-    end
-    toc
+    a=toc(a)
 end
-
 disp('Creating solution2.txt')
-tic
+b=tic
 create_solution2(pfs,contingencies,fixGen2Normal(gen2shunts(mpcOPF)));
-toc
+b=toc(b)
 end
