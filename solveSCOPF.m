@@ -291,6 +291,9 @@ while it < 40
         F(k)=parfeval(@myrunOPF,1,mpc_cp,OPT(k));
     end
     F
+    F(1).Error.cause
+    F(15).Error.cause
+    F(30).Error.cause
     %-- Checking worker status
     runningW=[];
     successFlag = false;
