@@ -290,7 +290,7 @@ while it < 40
     for k=1:comb_num
         F(k)=parfeval(@myrunOPF,1,mpc_cp,OPT(k));
     end
-    
+    F
     %-- Checking worker status
     runningW=[];
     successFlag = false;
