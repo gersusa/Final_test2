@@ -239,7 +239,7 @@ if numWorks < 7
     disp('WARNING: Parpool has less than 7 workers')
     disp('Performance will be strongly affected')
 end
-comb_num = min(numWorks, 45); % 45 available combinations for ipopt.options
+comb_num = min(numWorks, 30); % 45 available combinations for ipopt.options
 % Loading different set of ipopt options
 [OPT, accept_index]= loadSeeds(comb_num, tOPF1);
 
