@@ -26,10 +26,9 @@ order_save = mpcOPF_or.order.bus.e2i; % busses w/ fixed shunts
 
 %%
 if ~isempty(pfs)
-    mpcOPF2 = mpcOPF;
-    mpcOPF_or2 = mpcOPF_or;
-    mpcOPF2_indexMap=mpcOPF2.indexMap;
-    mpcOPF_or2_comp=mpcOPF_or2.comp;
+    tic
+    mpcOPF_indexMap=mpcOPF.indexMap;
+    mpcOPF_or_comp=mpcOPF_or.comp;
     %pfs_bus={pfs(:).bus};
     %pfs_gen={pfs(:).gen};
     %     [PQ, PV, REF, NONE, BUS_I, BUS_TYPE, PD, QD, GS, BS, BUS_AREA, VM, ...
@@ -39,13 +38,14 @@ if ~isempty(pfs)
     %     QC2MIN, QC2MAX, RAMP_AGC, RAMP_10, RAMP_30, RAMP_Q, APF] = idx_gen;
     for i=1:length(pfs)
         pfs(i).order.bus.e2i= order_save;
-        pfs(i).indexMap=mpcOPF2_indexMap;
-        pfs(i).comp=mpcOPF_or2_comp;
-        pfs(i).bus=[pfs(i).bus mpcOPF_or2.bus(:,PD) mpcOPF_or2.bus(:,QD)];    %BE CAREFULL WITH THE NEW CONSTANTS INDEX, PD(7) QD(8)
-        pfs(i).gen=[pfs(i).gen mpcOPF_or2.gen(:,PMIN) mpcOPF_or2.gen(:,PMAX) mpcOPF_or2.gen(:,QMIN) mpcOPF_or2.gen(:,QMAX)]; %BE CAREFULL WITH THE NEW CONSTANTS INDEX, pmin(5) pmax(6) qmin(7) qmax(8)
+        pfs(i).indexMap=mpcOPF_indexMap;
+        pfs(i).comp=mpcOPF_or_comp;
+        pfs(i).bus=[pfs(i).bus mpcOPF_or.bus(:,PD) mpcOPF_or.bus(:,QD)];    %BE CAREFULL WITH THE NEW CONSTANTS INDEX, PD(7) QD(8)
+        pfs(i).gen=[pfs(i).gen mpcOPF_or.gen(:,PMIN) mpcOPF_or.gen(:,PMAX) mpcOPF_or.gen(:,QMIN) mpcOPF_or.gen(:,QMAX)]; %BE CAREFULL WITH THE NEW CONSTANTS INDEX, pmin(5) pmax(6) qmin(7) qmax(8)
 %         pfs(i).bus=[pfs_bus{i} mpcOPF_or2.bus(:,PD) mpcOPF_or2.bus(:,QD)];    %BE CAREFULL WITH THE NEW CONSTANTS INDEX, PD(7) QD(8)
 %         pfs(i).gen=[pfs_gen{i} mpcOPF_or2.gen(:,PMIN) mpcOPF_or2.gen(:,PMAX) mpcOPF_or2.gen(:,QMIN) mpcOPF_or2.gen(:,QMAX)]; %BE CAREFULL WITH THE NEW CONSTANTS INDEX, pmin(5) pmax(6) qmin(7) qmax(8)
     end
+    toc
     tic
     pfs_cell=num2cell(pfs(:));
     parfor i=1:length(pfs)
