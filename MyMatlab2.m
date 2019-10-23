@@ -17,7 +17,7 @@ function MyMatlab2(InFile1, InFile2, InFile3, InFile4, TimeLimitInSeconds, Scori
     QC2MIN, QC2MAX, RAMP_AGC, RAMP_10, RAMP_30, RAMP_Q, APF] = idx_gen;
 
 pool=gcp;
-pool.IdleTimeout = 120
+pool.IdleTimeout = 120;
 %[mpc,contingencies] = convert2mpc(InFile3,InFile4,InFile2,InFile1);
 load('mpc.mat');
 % Get switched shunts data
