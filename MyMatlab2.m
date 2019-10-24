@@ -17,9 +17,11 @@ function MyMatlab2(InFile1, InFile2, InFile3, InFile4, TimeLimitInSeconds, Scori
     QC2MIN, QC2MAX, RAMP_AGC, RAMP_10, RAMP_30, RAMP_Q, APF] = idx_gen;
 
 pool=gcp;
-pool.IdleTimeout = 120;
+pool.IdleTimeout = 120
 %[mpc,contingencies] = convert2mpc(InFile3,InFile4,InFile2,InFile1);
+load_mpc = tic;
 load('mpc.mat');
+load_mpc = toc(load_mpc)
 % Get switched shunts data
 %limitTimeRAC = (length(contingencies.branch)+length(contingencies.gen));
 [~] = runAllCONS2(mpcOPF, contingencies,mpcOPF_or, 'AC',1,1); %Force voltages activate
