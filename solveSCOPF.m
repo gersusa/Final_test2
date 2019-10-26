@@ -459,13 +459,13 @@ while it < 40
         rtCG=rtCL;
         tSelCont = tic;
         % Serial or parallel execution
-        if numWorks < 7
+        if numWorks < 7 || size(mpcOPF.bus,1)>15e3
             disp('selectContingencies NO_PAR')
             conIndex = selectContingencies_nf(rtCL,rtCG,mpcOPF,...
                 contingencies_m,'p');
         else
             disp('selectContingencies PAR')
-            conIndex = selectContingencies_nf_par(rtCL,rtCG,mpcOPF,...
+            conIndex = selectContingencies_nf_par3(rtCL,rtCG,mpcOPF,...
                 contingencies_m,'p');
         end
         contingencies = editContingencies(conIndex,contingencies_m);
