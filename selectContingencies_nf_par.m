@@ -100,10 +100,14 @@ end
                 sqrt(x(:,3).^2+x(:,4).^2)],[],2);
             powfact = @(x) cos(atan2(x(:,2),x(:,1)));
             
-            pool = gcp;
+            pool = gcp
             nworks = pool.NumWorkers
             pre_branch_sel = toc(pre_branch_sel)
             
+            sList_BR_out=[];
+mpcOPF_branch=mpcOPF.branch;
+            mpcOPF_indexMap_branch=mpcOPF.indexMap.branch;
+            mpcOPF_bus = mpcOPF.bus;
             
             spmd_time = tic;
                         spmd(7)
@@ -115,10 +119,8 @@ end
 %             sList_BRpfD=[];
 %             sList_BRconn=[];
 numlabs
-sList_BR_out=[];
-mpcOPF_branch=mpcOPF.branch;
-            mpcOPF_indexMap_branch=mpcOPF.indexMap.branch;
-            mpcOPF_bus = mpcOPF.bus;
+            labindex
+            pool = gcp
             spmd_time = toc(spmd_time)
                             switch labindex
                                 case 1
