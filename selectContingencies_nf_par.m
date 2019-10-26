@@ -106,7 +106,7 @@ end
             
             
             spmd_time = tic;
-                        spmd(10)
+                        spmd(7)
 %             sList_BRs=[];
 %             sList_BRq=[];
 %             sList_BRqD=[];
