@@ -465,7 +465,7 @@ while it < 40
                 contingencies_m,'p');
         else
             disp('selectContingencies PAR')
-            conIndex = selectContingencies_nf_par3(rtCL,rtCG,mpcOPF,...
+            conIndex = selectContingencies_nf_par(rtCL,rtCG,mpcOPF,...
                 contingencies_m,'p');
         end
         contingencies = editContingencies(conIndex,contingencies_m);
