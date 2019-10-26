@@ -59,7 +59,7 @@ disp('finished: runAllCONS')
 %     toc
 % end
 % 
-% disp('Creating solution2.txt')
+disp('Creating solution2.txt')
 % tic
 % create_solution2(pfs,contingencies,fixGen2Normal(gen2shunts(mpcOPF)));
 % toc
