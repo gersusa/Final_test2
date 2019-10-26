@@ -24,6 +24,8 @@ else
     [mpc,contingencies] = convert2mpc_par(InFile3,InFile4,InFile2,InFile1);
 end
 
+myfiles={'contIndex.p'};     
+addAttachedFiles(gcp,myfiles); 
 %% Secure-constrained Optimal Power Flow
 [mpcOPF, ~, mpcOPF_or] = solveSCOPF(mpc,contingencies,...
     true,TimeLimitInSeconds, ScoringMethod, startTime);
